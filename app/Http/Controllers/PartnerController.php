@@ -15,12 +15,15 @@ class PartnerController extends Controller
             'individual' => $individual
         ]);
     }
-
+    
     /**
      * Store a newly created partner in storage.
      */
     public function store(Request $request, Individual $individual) {
-        $individual->partner()->create($request->all());
-        return redirect()->route('individuals.show', $individual);
+        $partner = $request->all(); 
+        $individual->partner()->create($partner);
+        $modellingController= new ModellingController();
+        
+        return $modellingController->index($individual, $partner);
     }
 }

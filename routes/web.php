@@ -19,4 +19,4 @@ Route::get('/partners/create/{individual}', [PartnerController::class, 'create']
 Route::post('/partners/{individual}', [PartnerController::class, 'store'])->name('partners.store');
 
 // Test get both data
-Route::get('/testquery', [ModellingController::class, 'index']);
+Route::get('/testquery', [ModellingController::class, 'index'])->name('results.show');
