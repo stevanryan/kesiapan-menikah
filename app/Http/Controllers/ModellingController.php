@@ -42,6 +42,19 @@ class ModellingController extends Controller
         $c5_a1 = $this->hitungUtility('tempat_tinggal', $individualScore, $partnerScore);
         $c5_a2 = $this->hitungUtility('tempat_tinggal', $partnerScore, $individualScore);
 
+        // dd([
+        //     'c1_a1' => $c1_a1,
+        //     'c1_a2' => $c1_a2,
+        //     'c2_a1' => $c2_a1,
+        //     'c2_a2' => $c2_a2,
+        //     'c3_a1' => $c3_a1,
+        //     'c3_a2' => $c3_a2,
+        //     'c4_a1' => $c4_a1,
+        //     'c4_a2' => $c4_a2,
+        //     'c5_a1' => $c5_a1,
+        //     'c5_a2' => $c5_a2,
+        // ]);
+
         $total_alternatif_individual = $this->hitungTotalKriteria($c1_a1, $c2_a1, $c3_a1, $c4_a1, $c5_a1);
         $total_alternatif_partner = $this->hitungTotalKriteria($c1_a2, $c2_a2, $c3_a2, $c4_a2, $c5_a2);
 
@@ -79,15 +92,25 @@ class ModellingController extends Controller
         ];
     }
 
-    public function hitungUtility($criteria, $individualScore, $partnerScore) {
-        $numerator = $individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria]);
-        $denominator = max($individualScore[$criteria] , $partnerScore[$criteria]) -  min($individualScore[$criteria], $partnerScore[$criteria]);
-        if ($denominator == 0) {
-            return 0;
-        }
-        return $numerator / $denominator;
-    }
+    // public function hitungUtility($criteria, $individualScore, $partnerScore) {
+    //     $denominator = max($individualScore[$criteria], $partnerScore[$criteria]) - min($individualScore[$criteria], $partnerScore[$criteria]);
     
+    //     if ($denominator == 0) {
+    //         return 0;
+    //     }
+    //     return ($individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria])) / $denominator;
+    // }
+    public function hitungUtility($criteria, $individualScore, $partnerScore) {
+        if ($individualScore[$criteria] == $partnerScore[$criteria]) {
+            return 1;
+        }
+        $maxPossibleScore = 4;
+        $minPossibleScore = 1;
+
+        # (Cout - Cmin) / (Cmax - Cmin)
+        return ($individualScore[$criteria] - $minPossibleScore) / ($maxPossibleScore - $minPossibleScore);
+    }
+        
 
     public function hitungTotalKriteria($c1, $c2, $c3, $c4, $c5) { 
         return ($c1 * 0.35) + ($c2 * 0.2) + ($c3 * 0.15) + ($c4 * 0.1) + ($c5 * 0.2); 
