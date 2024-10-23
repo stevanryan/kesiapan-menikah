@@ -92,19 +92,25 @@ class ModellingController extends Controller
         ];
     }
 
-    public function hitungUtility($criteria, $individualScore, $partnerScore) {
-        $denominator = max($individualScore[$criteria], $partnerScore[$criteria]) - min($individualScore[$criteria], $partnerScore[$criteria]);
+    // public function hitungUtility($criteria, $individualScore, $partnerScore) {
+    //     $denominator = max($individualScore[$criteria], $partnerScore[$criteria]) - min($individualScore[$criteria], $partnerScore[$criteria]);
     
-        // Mengembalikan 0 jika denominator adalah 0 (untuk menghindari division by zero)
+    //     if ($denominator == 0) {
+    //         return 0;
+    //     }
+    //     return ($individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria])) / $denominator;
+    // }
+    public function hitungUtility($criteria, $individualScore, $partnerScore) {
+        $numerator = $individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria]);
+        $denominator = max($individualScore[$criteria] , $partnerScore[$criteria]) -  min($individualScore[$criteria], $partnerScore[$criteria]);
         if ($denominator == 0) {
             return 0;
         }
-    
-        return ($individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria])) / $denominator;
+        return $numerator / $denominator;
     }
     
 
     public function hitungTotalKriteria($c1, $c2, $c3, $c4, $c5) { 
-        return ($c1 * 0.25) + ($c2 * 0.2) + ($c3 * 0.15) + ($c4 * 0.1) + ($c5 * 0.2); 
+        return ($c1 * 0.35) + ($c2 * 0.2) + ($c3 * 0.15) + ($c4 * 0.1) + ($c5 * 0.2); 
     }
 }
