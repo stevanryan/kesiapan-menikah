@@ -10,7 +10,7 @@
         
     <title>{{ $title ?? 'Untitled' }} | {{ config('app.name') }}</title>
 </head>
-<body>
+<body class="bg-[#e5dfd5]">
     
     {{-- @include('components.navbar') --}}
     

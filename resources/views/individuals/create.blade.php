@@ -9,7 +9,7 @@
             <!-- Field untuk Nama -->
             <div class="mb-3">
                 <label for="nama" class="block font-medium text-gray-700">Nama</label>
-                <input type="text" name="nama" id="nama" class="text-sm w-full border border-gray-300 rounded-lg px-2 py-2 mt-2" placeholder="Masukkan nama" required>
+                <input type="text" name="nama" id="nama" class="focus:border-none bg-transparent placeholder-gray-500 text-sm w-full border border-gray-700 rounded-lg px-2 py-2 mt-2" placeholder="Masukkan nama" required>
                 @error('nama')
                     <p class="text-sm my-1 text-red-500">{{ $message }}</p>
                 @enderror
