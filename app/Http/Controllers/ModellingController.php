@@ -42,26 +42,12 @@ class ModellingController extends Controller
         $c5_a1 = $this->hitungUtility('tempat_tinggal', $individualScore, $partnerScore);
         $c5_a2 = $this->hitungUtility('tempat_tinggal', $partnerScore, $individualScore);
 
-        // dd([
-        //     'c1_a1' => $c1_a1,
-        //     'c1_a2' => $c1_a2,
-        //     'c2_a1' => $c2_a1,
-        //     'c2_a2' => $c2_a2,
-        //     'c3_a1' => $c3_a1,
-        //     'c3_a2' => $c3_a2,
-        //     'c4_a1' => $c4_a1,
-        //     'c4_a2' => $c4_a2,
-        //     'c5_a1' => $c5_a1,
-        //     'c5_a2' => $c5_a2,
-        // ]);
-
         $total_alternatif_individual = $this->hitungTotalKriteria($c1_a1, $c2_a1, $c3_a1, $c4_a1, $c5_a1);
         $total_alternatif_partner = $this->hitungTotalKriteria($c1_a2, $c2_a2, $c3_a2, $c4_a2, $c5_a2);
 
         return view('results.show', [
-           
-            'total_alternatif_individual' => $total_alternatif_individual,
-            'total_alternatif_partner' => $total_alternatif_partner, 
+            'total_alternatif_individual' => round($total_alternatif_individual, 2),
+            'total_alternatif_partner' => round($total_alternatif_partner, 2),
             'individual' => $individual,
             'partner' => $partner
         ]);
@@ -92,14 +78,6 @@ class ModellingController extends Controller
         ];
     }
 
-    // public function hitungUtility($criteria, $individualScore, $partnerScore) {
-    //     $denominator = max($individualScore[$criteria], $partnerScore[$criteria]) - min($individualScore[$criteria], $partnerScore[$criteria]);
-    
-    //     if ($denominator == 0) {
-    //         return 0;
-    //     }
-    //     return ($individualScore[$criteria] - min($individualScore[$criteria], $partnerScore[$criteria])) / $denominator;
-    // }
     public function hitungUtility($criteria, $individualScore, $partnerScore) {
         if ($individualScore[$criteria] == $partnerScore[$criteria]) {
             return 1;
@@ -107,7 +85,7 @@ class ModellingController extends Controller
         $maxPossibleScore = 4;
         $minPossibleScore = 1;
 
-        # (Cout - Cmin) / (Cmax - Cmin)
+        // (Cout - Cmin) / (Cmax - Cmin)
         return ($individualScore[$criteria] - $minPossibleScore) / ($maxPossibleScore - $minPossibleScore);
     }
         
